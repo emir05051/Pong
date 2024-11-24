@@ -1,27 +1,23 @@
 #include "Player.h"
+#include <iostream>
 Player::Player(bool isLeft, Window *window) : Bar(isLeft, window) 
 {
 	barColor = sf::Color::White; 
+    bar.setFillColor(barColor);
 }
-void Player::move()
+void Player::movePlayer()
 {
     sf::Vector2i mousePosition = gameWindow->getMousePosition();
-
     constexpr float barMoveSpeed = 0.1f;
     sf::Vector2f playerPosition = bar.getPosition();
 
-
     if (mousePosition.y > playerPosition.y + getBarSize().y / 2.0f)
     {
-        float playerNewPosition = playerPosition.y + barMoveSpeed;
-        if (playerNewPosition < gameWindow->getWindowsHeight() - getBarSize().y)
-            bar.setPosition(playerPosition.x, playerNewPosition);
+        move(playerPosition.x, playerPosition.y + barMoveSpeed);
     }
     else
     {
-        float playerNewPosition = playerPosition.y - barMoveSpeed;
-        if (playerNewPosition > 0)
-            bar.setPosition(playerPosition.x, playerNewPosition);
+        move(playerPosition.x, playerPosition.y - barMoveSpeed); 
     }
 
 }

@@ -2,9 +2,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-#include "Player.h"
-#include "Ball.h"
-#include "AI.h"
+class Bar; 
+class Ball;
 
 class Window
 {
@@ -15,7 +14,7 @@ public:
 
 	void close(); 
 	void handleEvents();
-	void renderWindow(Player* player, AI* enemy, Ball* ball);
+	void renderWindow(Bar* player, Bar* enemy, Ball* ball);
 
 	bool isOpen() const; 
 

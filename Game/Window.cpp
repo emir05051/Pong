@@ -1,17 +1,22 @@
 #include "Window.h"
+#include "Ball.h"
+#include "Bar.h"
 
 Window::Window(int width, int height)
-	: window(sf::VideoMode(width, height), TITLE),
-	window_width(width), window_height(width), TITLE("Pong Game")
+	: window(sf::VideoMode(width, height), TITLE, sf::Style::None),
+	window_width(width), window_height(height), TITLE("Pong Game")
 {
 }
 
 Window::Window(int width, int height, std::string title)
 	: window(sf::VideoMode(width, height), TITLE), 
-	  window_width(width), window_height(width), TITLE(title)
+	  window_width(width), window_height(height), TITLE(title)
 {	
 }
-
+Window::~Window()
+{
+	close();
+}
 void Window::close()
 {
 	window.close();
@@ -35,12 +40,12 @@ void Window::handleEvents()
 		}
 	}
 }
-void Window::renderWindow(Player *player, AI *enemy, Ball *ball)
+void Window::renderWindow(Bar *player, Bar *enemy, Ball *ball)
 {
 	window.clear();
 
 	window.draw(player->getShape());
-	window.draw(enemy);
+	window.draw(enemy->getShape());
 	window.draw(ball->getShape());
 
 	window.display();

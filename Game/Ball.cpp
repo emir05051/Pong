@@ -28,23 +28,40 @@ void Ball::move()
     accelerate(); 
 }
 
+sf::CircleShape& Ball::getShape()
+{
+    return ball;
+}
+
+
 void Ball::accelerate()
 {
-    ballSpeedX *= 1 + acceleration; 
-    ballSpeedY *= 1 + acceleration; 
+    if(ballSpeedX < maxSpeed)
+        ballSpeedX *= 1 + acceleration;
+    if (ballSpeedY < maxSpeed)
+        ballSpeedY *= 1 + acceleration;
 }
 
 void Ball::checkCollision(Bar *object)
 {
-    sf::Vector2f ballPosition  = ball.getPosition(); 
+    sf::Vector2f ballPosition   = ball.getPosition(); 
     sf::Vector2f objectPosition = object->getShape().getPosition();
 
-    bool isOnTheSameHeight = ballPosition.y >= objectPosition.y && ballPosition.y <= objectPosition.y + object->getBarSize().y; 
-    bool isOnTheSameWidth  = ballPosition.x <= objectPosition.x + object->getBarSize().x + 1.0f || ballPosition.x == objectPosition.x;
+    bool isOnTheSameHeight = ballPosition.y >= (objectPosition.y - 10.0f) && ballPosition.y <= (objectPosition.y + object->getBarSize().y + 10.0f);
+    bool isOnTheSameWidth;
+    
+    if (object->isLeft)
+    {
+        isOnTheSameWidth = ballPosition.x < objectPosition.x + object->getBarSize().x + 1.0f;
+    }
+    else 
+    {
+        isOnTheSameWidth = ballPosition.x > objectPosition.x - 1.0f;
+    }
 
     if (isOnTheSameHeight && isOnTheSameWidth)
     {
         ballSpeedX *= -1;
-        ballSpeedY *= -1;
+        ballSpeedY *= (rand() % 2 == 0 ? -1 : 1);
     }
 }

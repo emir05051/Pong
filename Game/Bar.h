@@ -1,29 +1,29 @@
 #pragma once
-#include <SFML/Graphics.hpp>	
-#include "Window.h"
 
+#include "Window.h"
 
 class Bar
 {
 public:
-	Bar(bool isLeft, Window *window); 
-	sf::RectangleShape& getShape(); 
 
+	Bar(bool isLeft, Window *window); 
+	
+	sf::RectangleShape& getShape(); 
 	sf::Vector2f getBarSize();
 
+	bool isLeft;
 protected:
 	sf::Color barColor; 
-	sf::RectangleShape bar; 
-	const sf::Vector2f barSize;
+	sf::Vector2f barSize;
+	sf::RectangleShape bar;
 	
-	Window *gameWindow;
+	Window *gameWindow = nullptr;
 
-	bool isLeft;
+	
+	bool isInWindow(sf::Vector2f position);
+	void move(float x, float y);
 
 private:
-	float barWidth = 25.0f;
-	float barHeight = 150.0f;
-
 	sf::Vector2f getPosition(bool isLeft, Window* window);
 };
 
